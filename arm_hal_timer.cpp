@@ -2,6 +2,9 @@
  * Copyright (c) 2016 ARM Limited, All Rights Reserved
  */
 
+// Include before mbed.h to properly get UINT*_C()
+#include "ns_types.h"
+
 #include "mbed.h"
 
 #include "platform/arm_hal_timer.h"
