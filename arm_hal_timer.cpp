@@ -32,10 +32,8 @@ void platform_timer_set_cb(void (*new_fp)(void))
 
 static void timer_callback(void)
 {
-    platform_interrupts_disabled();
     due = 0;
     callback();
-    platform_interrupts_enabling();
 }
 
 // This is called from inside platform_enter_critical - IRQs can't happen
