@@ -21,15 +21,30 @@ static osMutexDef(event);
 
 static osThreadId event_thread_id;
 static osMutexId event_mutex_id;
+static osThreadId event_mutex_owner_id = NULL;
+static uint32_t owner_count = 0;
 
 void eventOS_scheduler_mutex_wait(void)
 {
     osMutexWait(event_mutex_id, osWaitForever);
+    if (0 == owner_count) {
+        event_mutex_owner_id = osThreadGetId();
+    }
+    owner_count++;
 }
 
 void eventOS_scheduler_mutex_release(void)
 {
+    owner_count--;
+    if (0 == owner_count) {
+        event_mutex_owner_id = NULL;
+    }
     osMutexRelease(event_mutex_id);
+}
+
+uint8_t eventOS_scheduler_mutex_is_owner(void)
+{
+    return osThreadGetId() == event_mutex_owner_id ? 1 : 0;
 }
 
 void eventOS_scheduler_signal(void)
