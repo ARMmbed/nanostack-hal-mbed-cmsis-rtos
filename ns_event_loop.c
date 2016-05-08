@@ -63,6 +63,7 @@ static void event_loop_thread(const void *arg)
 
 void ns_event_loop_thread_create(void)
 {
+    event_mutex_id = osMutexCreate(osMutex(event));
     event_thread_id = osThreadCreate(osThread(event_loop_thread), NULL);
 }
 
