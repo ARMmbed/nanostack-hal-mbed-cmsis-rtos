@@ -129,7 +129,9 @@ platform_nvm_status platform_nvm_key_create(nvm_callback *callback, const char *
 
     nvm_data_entry_t *entry = ALLOC(sizeof(nvm_data_entry_t));
     memset(entry, 0, sizeof(nvm_data_entry_t));
-    entry->key = strdup(key_name);
+    size_t key_len = strlen(key_name) + 1;
+    entry->key = ALLOC(key_len);
+    memcpy(entry->key, key_name, key_len);
     entry->data_len = value_len;
     entry->data = ALLOC(value_len);
 
