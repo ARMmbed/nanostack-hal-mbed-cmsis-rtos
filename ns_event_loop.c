@@ -16,7 +16,7 @@ static void event_loop_thread(const void *arg);
 
 // 1K should be enough - it's what the SAM4E port uses...
 // What happened to the instances parameter?
-static osThreadDef(event_loop_thread, osPriorityNormal, /*1,*/ 2048);
+static osThreadDef(event_loop_thread, osPriorityNormal, /*1,*/ 5120);
 static osMutexDef(event);
 
 static osThreadId event_thread_id;
