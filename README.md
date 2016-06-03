@@ -24,13 +24,13 @@ To take the latest version of the nvm reference code into another
 repository already containing it as a subtree, use the command:
 
     git subtree pull -P our/path/to/nvm \
-            git@github.com/ARMmbed/nanomesh-applications nvm
+            git@github.com:ARMmbed/nanomesh-applications nvm
 
 To take this code into use as a subtree for the first time,
 use the command:
 
     git subtree add -P our/path/to/nvm \
-            git@github.com/ARMmbed/nanomesh-applications nvm
+            git@github.com:ARMmbed/nanomesh-applications nvm
 
 See 'git help subtree' for more information.
 
