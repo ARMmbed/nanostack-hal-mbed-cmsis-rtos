@@ -5,19 +5,36 @@
 // Include before mbed.h to properly get UINT*_C()
 #include "ns_types.h"
 
+#include "cmsis_os.h"
 #include "mbed.h"
 
 #include "platform/arm_hal_timer.h"
 #include "platform/arm_hal_interrupt.h"
+
+static osThreadId timer_thread_id;
 
 static Timer timer;
 static Timeout timeout;
 static uint32_t due;
 static void (*callback)(void);
 
+static void timer_thread(const void *)
+{
+    for (;;) {
+        osSignalWait(1, osWaitForever);
+        // !!! We don't do our own enter/exit critical - we rely on callback
+        // doing it (ns_timer_interrupt_handler does)
+        //platform_enter_critical();
+        callback();
+        //platform_exit_critical();
+    }
+}
+
 // Called once at boot
 void platform_timer_enable(void)
 {
+    static osThreadDef(timer_thread, osPriorityRealtime, /*1,*/ 2*1024);
+    timer_thread_id = osThreadCreate(osThread(timer_thread), NULL);
     timer.start();
 }
 
@@ -36,7 +53,8 @@ void platform_timer_set_cb(void (*new_fp)(void))
 static void timer_callback(void)
 {
     due = 0;
-    callback();
+    osSignalSet(timer_thread_id, 1);
+    //callback();
 }
 
 // This is called from inside platform_enter_critical - IRQs can't happen

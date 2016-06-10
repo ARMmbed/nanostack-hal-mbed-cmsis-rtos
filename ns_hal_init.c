@@ -12,6 +12,7 @@
 #include "platform/arm_hal_timer.h"
 #include "ns_trace.h"
 
+#include "arm_hal_interrupt_private.h"
 #include "ns_hal_init.h"
 
 void ns_hal_init(void *heap, size_t h_size, void (*passed_fptr)(heap_fail_t), mem_stat_t *info_ptr)
@@ -27,6 +28,7 @@ void ns_hal_init(void *heap, size_t h_size, void (*passed_fptr)(heap_fail_t), me
             return;
         }
     }
+    platform_critical_init();
     ns_dyn_mem_init(heap, h_size, passed_fptr, info_ptr);
     platform_timer_enable();
     eventOS_scheduler_init();
