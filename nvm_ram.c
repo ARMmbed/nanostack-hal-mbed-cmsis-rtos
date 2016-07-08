@@ -2,6 +2,20 @@
  * Copyright (c) 2016, ARM Limited, All Rights Reserved.
  */
 
+#ifdef MBED_CONF_NANOSTACK_HAL_NVM_CFSTORE
+#  if MBED_CONF_NANOSTACK_HAL_NVM_CFSTORE
+#    define IGNORE_SIMULATED_NVM_STORAGE
+#  else
+#    undef IGNORE_SIMULATED_NVM_STORAGE
+#  endif
+#endif
+
+/*
+ * Define flag IGNORE_SIMULATED_NVM_STORAGE to ignore usage of simulated NVM and use 
+ * platform specific NVM instead.
+ */
+#ifndef IGNORE_SIMULATED_NVM_STORAGE
+
 #include <stdlib.h>
 #include <string.h>
 #include "ns_types.h"
@@ -254,3 +268,5 @@ static void nvm_ram_free_entry(nvm_data_entry_t *entry)
     FREE(entry->data);
     FREE(entry);
 }
+
+#endif /* IGNORE_SIMULATED_NVM_STORAGE */
