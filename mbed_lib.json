@@ -7,7 +7,7 @@
         },
         "event-loop-thread-stack-size": {
             "help": "Define event-loop thread stack size.",
-            "value": 6148
+            "value": 6144
         }
     }
 }
