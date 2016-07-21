@@ -5,7 +5,7 @@
             "help": "Use cfstore as a NVM storage. Else RAM simulation will be used",
             "value": false
         },
-        "event-loop-thread-stack-size": {
+        "event_loop_thread_stack_size": {
             "help": "Define event-loop thread stack size.",
             "value": 6144
         }
